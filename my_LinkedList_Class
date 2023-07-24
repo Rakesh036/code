@@ -1,0 +1,190 @@
+/* es file me linked list ke pass bahut se property and function available hai
+
+fxn 1:- addAtEnd(integer)
+fxn 2:- addAtHead(integer)
+fxn 3:- addAt(index,integer)
+fxn 4:- display() to print linked list
+fxn 5:- size()
+fxn 6:- getAt(index)   get value at index
+fxn 7:- deleteAt(index)
+
+property 1:- size
+
+*/
+
+public class linkedList_02 {
+
+    public static class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+        }
+    }
+
+    public static class linkedlist {
+        Node head = null;
+        Node tail = null;
+        int size = 0;
+
+        void addAtEnd(int val) {
+            Node temp = new Node(val);
+            size++;
+            if (head == null) {
+                head = tail = temp;
+                return;
+            }
+            tail.next = temp;
+            tail = temp;
+        }
+
+        void addAtHead(int val) {
+            Node temp = new Node(val);
+            size++;
+            if (head == null) {
+                head = tail = temp;
+                return;
+            }
+            temp.next = head;
+            head = temp;
+        }
+
+        void addAt(int idx, int val) {
+            if (head == null) {
+                if (idx != 0) {
+                    System.out.print("Invalid index as linked list is empty   ");
+                    return;
+                }
+            }
+            if (idx < 0 || idx > size()) {
+                System.out.print("Invalid index   ");
+                return;
+            }
+            if (idx == 0) {
+                addAtHead(val);
+                return;
+            }
+            if (idx == size()) {
+                addAtEnd(val);
+                return;
+            }
+
+            Node temp = new Node(val);
+            size++;
+            Node i = head;
+            for (int j = 1; j <= idx - 1; j++) {
+                i = i.next;
+            }
+            temp.next = i.next;
+            i.next = temp;
+        }
+
+        void display() {
+            Node temp = head;
+            while (temp != null) {
+                System.out.print(temp.data + " ");
+                temp = temp.next;
+            }
+            System.out.println();
+        }
+
+        int size() {
+            int count = 0;
+            Node temp = head;
+            while (temp != null) {
+                count++;
+                temp = temp.next;
+            }
+            return count;
+        }
+
+        int getAt(int idx) {
+
+            if (idx < 0 || idx >= size()) {
+                System.out.print("Invalid index   ");
+                return -1;
+            }
+
+            Node i = head;
+            for (int j = 0; j < idx; j++) {
+                i = i.next;
+            }
+            return i.data;
+        }
+
+        void deleteAt(int idx) {
+            size--;
+            if (idx == 0) {
+                head = head.next;
+                return;
+            }
+            Node temp = head;
+            for (int i = 1; i <= idx - 1; i++) {
+                temp = temp.next;
+            }
+            temp.next = temp.next.next;
+        }
+
+    }
+
+/*
+___________________________________________________________________________________________________________
+                                                Main function
+___________________________________________________________________________________________________________
+*/
+
+    public static void main(String[] args) {
+        linkedlist ll = new linkedlist();
+        /* "ll" naam ka ek linkedlist bn gya jo empty hai, es "ll" ke pass bahut se property and function hai
+            me linkedlist class me define kiya hu */
+
+        ll.addAtEnd(4);
+        ll.display();
+        ll.addAtEnd(14);
+        ll.display();
+        ll.addAtEnd(42);
+        ll.display();
+        ll.addAtHead(0);
+        ll.display();
+        ll.addAtHead(01);
+        ll.display();
+        ll.addAtHead(02);
+        ll.display();
+        ll.addAtHead(03);
+        ll.display();
+
+
+        System.out.println("size = " + ll.size + " ");
+        ll.display();
+        System.out.println(ll.tail.data);
+        System.out.println(ll.size());
+        System.out.println(ll.head.data);
+        System.out.println("value at -1 = " + ll.getAt(-1));
+        System.out.println("value at 0 = " + ll.getAt(0));
+        System.out.println("value at 1 = " + ll.getAt(1));
+        System.out.println("value at 2 = " + ll.getAt(2));
+        System.out.println("value at 3 = " + ll.getAt(3));
+        System.out.println("value at 4 = " + ll.getAt(4));
+        System.out.println("value at 5 = " + ll.getAt(5));
+        System.out.println("value at 6 = " + ll.getAt(6));
+        System.out.println("value at 7 = " + ll.getAt(7));
+
+        System.out.println("size = " + ll.size + " ");
+        ll.deleteAt(2);
+        ll.display();
+        System.out.println("size = " + ll.size + " ");
+
+
+        ll.addAtEnd(1);
+        ll.addAtEnd(2);
+        ll.addAtEnd(3);
+        ll.addAtEnd(4);
+        ll.addAtEnd(5);
+        ll.addAt(6, 6);
+        ll.display();
+        System.out.println("size = " + ll.size);
+
+        System.out.println("size fxn = " + ll.size());
+    }
+}
