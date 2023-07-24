@@ -1,0 +1,184 @@
+/* hm esme manually linked list bnayenge and print krenge
+    mtlb
+
+    kaam 0:- Node class bnayenge
+    kaam 1:- hm phle bahut sare node bnayenge
+    kaam 2:- uske baad unhe link krenge
+    kaam 3:- print krenge manually, using loop, using function, using recursion, reverse using recursion
+    kaam 4:- linked list ka size nikalenge
+    kaam 5:- ek node delete krenge
+    kaam 6:- do node delete krenge
+    kaam 7:- random linking krenge
+
+    NOTE:- ye sb "Manually" kiye h es file me
+           next file ( linkedList_02 ) me ye sb function se krenge
+
+ */
+
+
+public class linkedList_01 {
+
+    // kaam 0
+    public static class Node { // node class
+        int data; // data at each node
+        Node next; // address of next node
+
+        Node(int data) {  // constructor or new node creator
+            this.data = data;
+        }
+    }
+
+    public static void printLinkedlist(Node temp) {
+        while (temp != null) {
+            System.out.print(temp.data + " ");
+            temp = temp.next;
+        }
+        System.out.println();
+    }
+
+    public static void printLinkedlistRecursion(Node temp) {
+        if (temp == null) {
+            System.out.print("recursion   ");
+            return;
+        }
+        System.out.print(temp.data + " ");
+        printLinkedlistRecursion(temp.next);
+    }
+
+
+    public static void printLinkedlistReverseRecursion(Node temp) {
+        if (temp == null) {
+            System.out.print("\nreverse    ");
+            return;
+        }
+        printLinkedlistReverseRecursion(temp.next);
+        System.out.print(temp.data + " ");
+    }
+
+/*
+___________________________________________________________________________________________________________
+                                                Main function
+___________________________________________________________________________________________________________
+*/
+
+    public static void main(String[] args) {
+        Node a = new Node(5);             // new node created value = 5 and next = null
+
+        //        System.out.println("\n" + a);
+        //        System.out.println(a.data);
+        //        System.out.println(a.next);
+        Node b = new Node(8);            // new node created value = 8 and next = null
+
+        //        System.out.println("\n" + b);
+        //        System.out.println(b.data);
+        //        System.out.println(b.next);
+
+        a.next = b;                          // 5 -> 8
+
+        //        System.out.println("\n" + b);
+        //        System.out.println(b.data);
+        //        System.out.println(a.next);
+        //        System.out.println(a.next.data);
+
+        Node c = new Node(9);
+        b.next = c;                        // 5 -> 8 -> 9
+
+//        System.out.println(a.data);        // = a.data
+//        System.out.println(a.next.data);   // = b.data
+//        System.out.println(a.next.next.data); // = c.data
+
+// kaam 1 node bnao
+        Node f = new Node(17);
+        Node g = new Node(29);
+        Node d = new Node(11);
+        Node e = new Node(15);
+
+// kaam 2 link kro hr node ko
+        c.next = d;
+        d.next = e;
+        e.next = f;
+        f.next = g;
+
+        // my linked list  a -> b -> c -> d -> e -> f -> g -> NULL
+        // 5 -> 8 -> 9 -> 11 -> 15 -> 17 -> 29 -> NULL
+
+// kaam 3 print kro linked list
+        // method 1 manually
+
+//        System.out.print(a.data + " ");
+//        System.out.print(b.data + " ");
+//        System.out.print(c.data + " ");
+//        System.out.print(d.data + " ");
+//        System.out.print(e.data + " ");
+//        System.out.print(f.data + " ");
+//        System.out.print(g.data + " ");
+//        System.out.println();
+
+        // print this linked list
+        // method 2 using loop
+        Node temp = a;
+        /* Here temp is not a node which its own stored a data
+           and address of next node
+           ye ek node type ka variable hai jo point krega kisi dusre node ko
+           esko pointer ki trh treat kro
+         */
+
+//        while (temp != null) {
+//            System.out.print(temp.data + " ");
+//            temp = temp.next;
+//        }
+//        System.out.println();
+
+        // print this linked list
+        // method 3 using function
+//        printLinkedlist(a);
+
+
+        // print this linked list
+        // method 4 using recursion
+        printLinkedlistRecursion(a);
+
+
+        // print this linked list
+        // method 5 reverse using recursion
+        printLinkedlistReverseRecursion(a);
+
+// kaam 4 size nikalo
+
+        temp = a;
+        int size = 0;
+        while (temp != null) {
+            size++;
+            temp = temp.next;
+        }
+//        System.out.println("Size of linked list is: " + size + "\n");
+
+// kaam 5:- ek node delete krenge
+        // a -> b -> c -> d -> e -> f -> g -> NULL
+        // delete "e"        a -> b -> c -> d -> f -> g -> NULL
+        d.next = f;  // ho gya hm`are linked list se delete (memory se delete nhi hua h or na hoga)
+        // mtlb avi v ek "e" naam ka ek node hai jisme data and address of "f" stored hai
+        // but es "e" ko kisi or node ki help nhi nikal skte
+
+// kaam 6:- do node delete krenge
+        // delete "c" and "f"   a -> b -> d -> g -> NULL
+        b.next = d;
+        d.next = g;
+
+// kaam 7:- random linking krenge
+        // b -> g -> a -> d -> NULL
+        b.next = g;
+        g.next = a;
+        a.next = d;
+        d.next = null;
+
+        temp = b;
+//        while (temp != null) {
+//            System.out.print(temp.data + " ");
+//            temp = temp.next;
+//        }
+//        System.out.println();
+
+    }
+
+}
