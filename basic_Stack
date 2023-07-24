@@ -1,0 +1,317 @@
+/* Stack_01 "inBuilt Stack" class ka use krenge
+   Stack_02 me array ka use kr Stack class bnayenge
+   Stack_03 me linked list ka use kr Stack class bnayenge
+   Stack_04 me interview question krenge
+____________________________________________________________________________________________________________
+function 1: push(intger)
+function 2: pop()
+function 3: peek()
+function 4: size()
+function 5: capacity()
+function 6: empty()
+___________________________________________________________________________________________________________
+Question and related function of solution
+___________________________________________________________________________________________________________
+Que 1:  copy stack in same order i.e. if st = [1,3,6,7,8] then resultant = [1,3,6,7,8]
+Sol  :  public static Stack copyStack(Stack st)
+        create temp stack then es feel kr do
+        ab resultant and "st" dono ko feel kro or temp ko khali kro
+
+Que2a:  insert data at bottom
+Sol  :  public static void pushAtBottomLoop(Stack st,int x)
+        khali kro fir "x" ko daalo then waps bhr do
+
+Que2b:  insert data at any index
+Sol  :  public static void insertAtIdxLoop(Stack st, int x, int idx)
+        khali kro but idx tk hi fir "x" ko dalo then waps bhr do
+
+Que2c:  insert data at bottom using recursion
+Sol  :  public static void insertAtBottonRecursion(Stack<Integer> st,int x)
+        Base case: stack ka size == 0 then push "x"
+        top ko stored kr "st" ko pop kro and recursion kro
+        push back top
+
+Que2d:  insert data at any index using recursion
+Sol  :  public static void insertAtIdxRecursion(Stack<Integer> st, int x, int idx)
+        Base case: stack ka size == idx then push "x"
+        top ko stored kr "st" ko pop kro and recursion kro
+        push back top
+
+Que3a:  remove data from bottom using loop
+Sol  :  public static void insertAtBottomLoop(Stack st, int x)
+
+Que3b:  remove data from any index using loop
+Sol  :  public static void deleteAtIdxLoop(Stack st,int idx)
+
+Que3c:  remove data from bottom using recursion
+Sol  :  public static void deleteAtBottomRecursion(Stack<Integer> st)
+
+Que3d:  remove data from any index using recursion
+Sol  :  public static void deleteAtIdxRecursion(Stack<Integer> st,int idx)
+
+Que 4:  take input from given array and create Stack
+Sol  :  public static Stack arrayToStack(int[] arr)
+
+Que 5:  create array from given data in Stack
+Sol  :  public static int[] stackToArray(Stack<Integer> st)
+
+Que 6: reverse the given stack using loop
+Sol   : public static void reverseStackLoop(Stack st)
+
+Que 7: reverse the given stack using recursion
+Sol   :  public static void reverseStackRecursion(Stack<Integer> st)
+
+___________________________________________________________________________________________________________
+display Stack function
+___________________________________________________________________________________________________________
+
+
+function 1: public static void displayReverseLoop(Stack st)
+            reverse = last element print first
+            received 1 2 3 4 print 4 3 2 1 using new Stack temp
+            st.peek se element print kro then push in temp
+            jb "st" khali ho jayega to again ese feel kr do
+
+function 2: public static void displayLoop(Stack st)
+            1st element print 1st
+            received 1 2 3 4 print 1 2 3 4 using new Stack temp
+            temp ko feel kro or "st" ko khali
+            then temp.peek se element print kro and push in "st"
+
+function 3: public static void displayRecursion(Stack<Integer> st)
+            1st element print 1st
+            received 1 2 3 4 print 1 2 3 4 using recursion
+            1st recursion then print
+
+function 4: public static void displayRecursionReverse(Stack<Integer> st)
+            last element print 1st
+            received 1 2 3 4 print 4 3 2 1 using recursion
+            1st print then recursion
+
+___________________________________________________________________________________________________________
+                                    File:  Stack_01
+___________________________________________________________________________________________________________
+*/
+
+package Stack;
+
+import java.util.Stack;
+
+public class Stack_01 {
+
+    // function 1:
+    public static void displayReverseLoop(Stack st) {  // received 1 2 3 4 print 4 3 2 1
+        Stack temp = new Stack();
+        while (st.size() > 0) {   // Stack st khali ho jayega
+            System.out.print(st.peek() + " ");
+            temp.push(st.pop());
+        }
+        System.out.println();
+        while ((temp.size() > 0)) {   // again fill kr diye
+            st.push(temp.pop());
+        }
+    }
+
+    // function 2:
+    public static void displayLoop(Stack st) {  // received 1 2 3 4 print 1 2 3 4
+        Stack temp = new Stack();
+        while (st.size() > 0) {   // Stack st khali ho jayega
+            temp.push(st.pop());
+        }
+        while ((temp.size() > 0)) {   // again fill kr diye
+            System.out.print(temp.peek() + " ");
+            st.push(temp.pop());
+        }
+        System.out.println();
+    }
+
+    // function 3:
+    public static void displayRecursion(Stack<Integer> st) {
+        if (st.size() == 0) {
+            System.out.print("base = ");
+            return;
+        }
+        int top = st.pop();
+        displayRecursion(st);
+        System.out.print(top + " ");
+        st.push(top);
+    }
+
+    // function 4:
+    public static void displayRecursionReverse(Stack<Integer> st) {
+        if (st.size() == 0) {
+            System.out.println();
+            return;
+        }
+        int top = st.pop();
+        System.out.print(top + " ");
+        displayRecursionReverse(st);
+        st.push(top);
+    }
+
+    // solution 1:
+    public static Stack copyStack(Stack st) {
+        Stack temp = new Stack();
+        Stack resultant = new Stack();
+        while (st.size() > 0) {
+            temp.push(st.pop());
+        }
+        while (temp.size() > 0) {
+            resultant.push(temp.peek());
+            st.push(temp.pop());
+        }
+        return resultant;
+    }
+
+    // solution 2a:
+    public static void insertAtBottomLoop(Stack st, int x) {
+        Stack temp = new Stack();
+        while (st.size() > 0) {
+            temp.push(st.pop());
+        }
+        st.push(x);
+        while (temp.size() > 0) {
+            st.push(temp.pop());
+        }
+    }
+
+    // solution 2b:
+    public static void insertAtIdxLoop(Stack st, int x, int idx) {
+        Stack temp = new Stack();
+        while (st.size() > idx) {
+            temp.push(st.pop());
+        }
+        st.push(x);
+        while (temp.size() > 0) {
+            st.push(temp.pop());
+        }
+    }
+
+    // solution 2c:
+    public static void insertAtBottonRecursion(Stack<Integer> st, int x) {
+        if (st.size() == 0) {
+            st.push(x);
+            return;
+        }
+        int top = st.pop();
+        insertAtBottonRecursion(st, x);
+        st.push(top);
+    }
+
+    // solution 2d:
+    public static void insertAtIdxRecursion(Stack<Integer> st, int x, int idx) {
+        if (st.size() == idx) {
+            st.push(x);
+            return;
+        }
+        int top = st.pop();
+        insertAtIdxRecursion(st, x, idx);
+        st.push(top);
+    }
+
+    // solution 3a:
+    public static void deleteAtBottomLoop(Stack st) {
+        Stack temp = new Stack();
+        while (st.size() > 0) {
+            temp.push(st.pop());
+        }
+        temp.pop();
+        while (temp.size() > 0) {
+            st.push(temp.pop());
+        }
+    }
+
+    // solution 3b:
+    public static void deleteAtIdxLoop(Stack st, int idx) {
+        Stack temp = new Stack();
+        while (st.size() > idx) {
+            temp.push(st.pop());
+        }
+        temp.pop();
+        while (temp.size() > 0) {
+            st.push(temp.pop());
+        }
+    }
+
+    // solution 3c:
+    public static void deleteAtBottomRecursion(Stack<Integer> st) {
+        if (st.size() == 1) {
+            st.pop();
+            return;
+        }
+        int top = st.pop();
+        deleteAtBottomRecursion(st);
+        st.push(top);
+    }
+
+    // solution 3d:
+    public static void deleteAtIdxRecursion(Stack<Integer> st, int idx) {
+        if (st.size() == idx + 1) {
+            st.pop();
+            return;
+        }
+        int top = st.pop();
+        deleteAtIdxRecursion(st, idx);
+        st.push(top);
+    }
+
+    // solution 4:
+    public static Stack arrayToStack(int[] arr) {
+        Stack st = new Stack();
+        for (int i = 0; i < arr.length; i++) {
+            st.push(arr[i]);
+        }
+        return st;
+    }
+
+    // solution 5:
+    public static int[] stackToArray(Stack<Integer> st) {
+        int n = st.size();
+        int[] arr = new int[n];
+        for (int i = n - 1; i >= 0; i--) {
+            arr[i] = st.pop();
+        }
+        return arr;
+    }
+
+    // solution 6:
+    public static void reverseStackLoop(Stack st) {  // st = [1 2 3 4]
+        Stack temp1 = new Stack();
+        Stack temp2 = new Stack();
+
+        while (st.size() > 0) {      // st = [] temp1 = [4 3 2 1]   temp2 = []
+            temp1.push(st.pop());
+        }
+
+        while (temp1.size() > 0) {     // st = [] temp1 = []   temp2 = [1 2 3 4]
+            temp2.push(temp1.pop());
+        }
+        while (temp2.size() > 0) {     // st = [4 3 2 1] temp1 = []    temp2 = []
+            st.push(temp2.pop());
+        }
+    }
+
+    // solution 7:
+    public static void reverseStackRecursion(Stack<Integer> st) {
+        if (st.size() == 1) {
+            return;
+        }
+        int top = st.pop();
+        reverseStackRecursion(st);
+        insertAtBottonRecursion(st, top);
+
+    }
+
+/*
+___________________________________________________________________________________________________________
+                                                Main function
+___________________________________________________________________________________________________________
+*/
+    public static void main(String[] args) {
+        Stack<Integer> st = new Stack<>();
+        st.push(1);
+        st.push(2);
+        st.push(3);
+        st.push(4);
+    }
+}
