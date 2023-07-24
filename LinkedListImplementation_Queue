@@ -1,0 +1,118 @@
+public class Queue_02 {
+    public static class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+        }
+    }
+
+    public static class QueueLinkedList {
+        private Node head;
+        private Node tail;
+        private int size = 0;
+
+        public void add(int a) {
+            Node temp = new Node(a);
+            // empty
+            if (size == 0) {
+                head = temp;
+                tail = temp;
+                size++;
+                return;
+            }
+            // normal
+            tail.next = temp;
+            tail = temp;
+            size++;
+        }
+
+        public int remove() {
+            // empty
+            if (size == 0) {
+                System.out.println("Queue is empty ");
+                return -1;
+            }
+            // normal
+            size--;
+            int temp = head.data;
+            head = head.next;
+            return temp;
+        }
+
+        public int peek() {
+            // empty
+            if (size == 0) {
+                System.out.println("Queue is empty ");
+                return -1;
+            }
+            // normal
+            return head.data;
+        }
+
+        public int size() {
+            return size;
+        }
+
+        public boolean isEmpty() {
+            return size == 0;
+        }
+
+        public void print() {
+            // empty
+            if (size == 0) {
+                System.out.println("Queue is empty ");
+                return;
+            }
+            // normal
+            Node temp = head;
+            while (temp != null) {
+                System.out.print(temp.data + " ");
+                temp = temp.next;
+            }
+            System.out.println();
+        }
+
+        private void reverseRecursionPrint(Node head) {
+            if (head == null) return;
+            reverseRecursionPrint(head.next);
+            System.out.print(head.data + " ");
+        }
+
+        public void printRevers() {
+            reverseRecursionPrint(head);
+        }
+
+//        private void reverse() {
+//            reverseRecursion(head);
+//        }
+//
+//        private Node reverseRecursion(Node head) {
+//            if (head.next == null) {
+//                return head;
+//            }
+//            Node newHead = reverseRecursion(head.next);
+//            head.next.next = head;
+//            head.next = null;
+//            return newHead;
+//        }
+
+
+    }
+
+    public static void main(String[] args) {
+        QueueLinkedList q = new QueueLinkedList();
+
+        q.add(1);
+        q.add(2);
+        q.add(3);
+        q.add(4);
+        q.add(5);
+        q.add(6);
+        q.print();
+        q.printRevers();
+
+        q.print();
+    }
+}
