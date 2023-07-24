@@ -1,0 +1,89 @@
+/* Stack_01 "inBuilt Stack" class ka use krenge
+   Stack_02 me array ka use kr Stack class bnayenge
+   Stack_03 me linked list ka use kr Stack class bnayenge
+   Stack_04 me interview question krenge
+-------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
+function 1: push(integer)
+function 2: pop()
+function 3: peek()
+function 4: size()
+function 5: isEmpty()
+function 6: display()
+___________________________________________________________________________________________________________
+                                    File:  Stack_03
+___________________________________________________________________________________________________________
+*/
+
+
+package Stack;
+
+public class Stack_03 {
+    public static class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+        }
+    }
+
+    private static void displayReverse(Node head) {
+        if (head == null) return;
+        displayReverse(head.next);
+        System.out.print(head.data + " ");
+    }
+
+    public static class StackLL {
+        private Node head = null;
+        private int size = 0;
+
+        void push(int x) {
+            Node temp = new Node(x);
+            temp.next = head;
+            head = temp;
+            size++;
+        }
+
+        int pop() {
+            int t = head.data;
+            head = head.next;
+            size--;
+            return t;
+        }
+
+        int peek() {
+            return head.data;
+        }
+
+        int size() {
+            return size;
+        }
+
+        boolean isEmpty() {
+            return (size == 0);
+        }
+
+
+        void display() {
+            displayReverse(head);
+            System.out.println();
+        }
+
+    }
+
+/*
+___________________________________________________________________________________________________________
+                                           Main function
+___________________________________________________________________________________________________________
+*/
+
+
+    public static void main(String[] args) {
+        StackLL st = new StackLL();
+        st.push(4);
+        st.push(7);
+        st.push(11);
+        st.display();
+    }
+}
