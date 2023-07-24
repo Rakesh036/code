@@ -1,0 +1,384 @@
+/* problem related to linked list ( collede wallah DSA lecture 52 )
+
+Que 1. delete a node when only deleted node is given and also deleted node is not last node
+Que 2. find nth node from end. Given:- head, n
+Sol.   method 1:- public static Node NthNodeFromEnd(Node head,int n)         0(n^2)
+       method 2:- public static Node NthNodeFromEndOptimised(Node head, int n)       0(n)
+
+Que 3. delete Nth node from end. Given:- head, n
+Que 4. find intersection of two linked list. Given:- head1, head2
+sol.   public static Node findJunction(Node head1, Node head2)          0(n)
+Que 5. find middle node. Given:- head
+Que 6. Node delete middle node. Given:- head
+Que 7. boolean detect cycle in linked list. Given:- head, return:- true/false.
+Que 8. Node detect cycle in linked list. Given:- head, return:- connected node/null.
+Que 9. Node merge two sorted linked list. Given:- head1,head2, return Head.
+Que 10.Node mergeLinkedListOptimised(Node head1, Node head2)
+Que 11.Node LinkedlistReverseRecursion(Node head)
+Que 12.Node oddEvenList(Node head)
+Que 13.reverseLinkedList(Node head)
+Que 14.isPalindrome(Node head)
+
+*/
+
+
+public class linkedList_03 {
+    public static class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+        }
+    }
+
+    // Helper1:
+    public static void print(Node temp) {
+        while (temp != null) {
+            System.out.print(temp.data + "  ");
+            temp = temp.next;
+        }
+        System.out.println();
+    }
+
+
+    // solution 1:
+    public static void deleteNode(Node temp) {
+        temp.data = temp.next.data;
+        temp.next = temp.next.next;
+    }
+
+    // solution 2a:
+    public static Node NthNodeFromEnd(Node head, int n) {
+        Node temp = head;
+        int size = 0;
+        while (temp != null) {
+            size++;
+            temp = temp.next;
+        }
+        // index from start
+        int m = size - n + 1;
+        temp = head;
+        for (int i = 1; i <= m - 1; i++) {
+            temp = temp.next;
+        }
+        return temp;
+    }
+
+    // solution 2b:
+    public static Node NthNodeFromEndOptimised(Node head, int n) {
+        Node slow = head;
+        Node fast = head;
+        for (int i = 1; i <= n; i++) {
+            fast = fast.next;
+        }
+        while (fast != null) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return slow;
+    }
+
+    // solution 3:
+    public static Node deleteNthNodeFromEnd(Node head, int n) {
+        Node slow = head;
+        Node fast = head;
+        for (int i = 1; i <= n; i++) {
+            fast = fast.next;
+        }
+        if (fast == null) {
+            head = head.next;
+            return head;
+        }
+        while (fast.next != null) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        slow.next = slow.next.next;
+        return head;
+    }
+
+    // solution 4:
+    public static Node findJunction(Node head1, Node head2) {
+        Node temp1 = head1, temp2 = head2;
+        int size1 = 0, size2 = 0;
+        while (temp1 != null) {
+            size1++;
+            temp1 = temp1.next;
+        }
+        while (temp2 != null) {
+            size2++;
+            temp2 = temp2.next;
+        }
+        if (size1 < size2) {
+            for (int i = size1; i < size2; i++) {
+                head2 = head2.next;
+            }
+        } else {
+            for (int i = size2; i < size1; i++) {
+                head1 = head1.next;
+            }
+        }
+
+        while (head1 != head2) {
+            head1 = head1.next;
+            head2 = head2.next;
+        }
+        return head2;
+    }
+
+    // solution 5a if length is even the return right middle:
+    public static Node middleNode1(Node head) {
+        Node slow = head;
+        Node fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+
+    }
+
+    // solution 5b if length is even the return left middle:
+    public static Node middleNode2(Node head) {
+        Node slow = head;
+        Node fast = head;
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+
+    }
+
+    // solution 6a if length is even then delete right middle:
+    public static void deleteMiddleNode(Node head) {
+        Node slow = head;
+        Node fast = head;
+        while (fast.next.next != null && fast.next.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        slow.next = slow.next.next;
+        print(head);
+    }
+
+    // solution 6b if length is even then delete left middle:
+    public static void deleteMiddleNode2(Node head) {
+        Node slow = head;
+        Node fast = head;
+        while (fast.next.next.next != null && fast.next.next.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        slow.next = slow.next.next;
+        print(head);
+    }
+
+    // solution 7 detect cycle return true/false
+    public static boolean IsCycleInLinkedlist(Node head) {
+        Node slow = head;
+        Node fast = head;
+        if (head == null || head.next == null)
+            return false;
+        while (fast != null) {
+            if (slow == null || fast.next == null) {
+                return false;
+            }
+            slow = slow.next;
+            fast = fast.next.next;
+            if (fast == slow) {
+                System.out.println("true = " + slow.next.data);
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+    // solution 8 detect cycle return node/null
+    public static Node detectCycle(Node head) {
+        Node fast = head;
+        Node slow = head;
+        if (head == null || head.next == null)
+            return null;
+        while (fast != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) {
+                break;
+            }
+            if (slow == null || fast.next == null || fast == null || fast.next.next == null) {
+                return null;
+            }
+        }
+        Node temp = head;
+        while (temp != slow) {
+            temp = temp.next;
+            slow = slow.next;
+        }
+        return slow;
+    }
+
+    // solution: 9
+    public static Node mergeLinkedList(Node head1, Node head2) {
+        Node temp1 = head1;
+        Node temp2 = head2;
+
+        Node head = new Node(110);
+        Node temp = head;
+
+        while (temp1 != null && temp2 != null) {
+            print(head);
+            if (temp1.data < temp2.data) {
+                Node x = new Node(temp1.data);
+                temp.next = x;
+                temp = x;
+                temp1 = temp1.next;
+            } else {
+                Node x = new Node(temp2.data);
+                temp.next = x;
+                temp = x;
+                temp2 = temp2.next;
+            }
+        }
+        if (temp1 == null) {
+            temp.next = temp2;
+        } else {
+            temp.next = temp1;
+        }
+        System.out.print("mereged linked list:  ");
+        print(head);
+        return head.next;
+    }
+
+    // solution: 10
+    public static Node mergeLinkedListOptimised(Node head1, Node head2) {
+        Node temp1 = head1;
+        Node temp2 = head2;
+
+        Node head = new Node(110);
+        Node temp = head;
+
+        while (temp1 != null && temp2 != null) {
+            print(head);
+            if (temp1.data < temp2.data) {
+                temp.next = temp1;
+                temp = temp1;
+                temp1 = temp1.next;
+            } else {
+                temp.next = temp2;
+                temp = temp2;
+                temp2 = temp2.next;
+            }
+        }
+        if (temp1 == null) {
+            temp.next = temp2;
+        } else {
+            temp.next = temp1;
+        }
+        System.out.print("mereged linked list:  ");
+        print(head);
+        return head.next;
+    }
+
+    // solution: 11
+    public static Node LinkedlistReverseRecursion(Node temp) {
+        if (temp.next == null) {
+            return temp;
+        }
+        Node newhead = LinkedlistReverseRecursion(temp.next);
+        temp.next.next = temp;
+        temp.next = null;
+        return newhead;
+    }
+
+    // solution: 12
+    public static Node oddEvenList(Node head) {
+        Node tempOdd = head;
+        Node tempEven = head.next;
+        Node even = tempEven;
+        while (tempOdd != null && tempEven != null) {
+            if (tempEven.next == null || tempOdd.next == null) {
+                break;
+            }
+            tempOdd.next = tempOdd.next.next;
+            tempEven.next = tempEven.next.next;
+            tempEven = tempEven.next;
+            tempOdd = tempOdd.next;
+
+        }
+        tempOdd.next = even;
+        return head;
+    }
+
+    // solution: 13
+    public static Node reverseLinkedList(Node head) {
+        Node prev = null;
+        Node agla = head;
+        while (agla != null) {
+            agla = head.next;
+            head.next = prev;
+            prev = head;
+            head = agla;
+        }
+
+        return prev;
+
+    }
+
+    // solution: 14
+    public static boolean isPalindrome(Node head) {
+        Node slow = head;
+        Node fast = head;
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        Node t = reverseLinkedList(slow.next);
+        while (t != null) {
+            if (head.data != t.data)
+                return false;
+            t = t.next;
+            head = head.next;
+        }
+        return true;
+    }
+/*
+___________________________________________________________________________________________________________
+                                       Main function
+___________________________________________________________________________________________________________
+*/
+    public static void main(String[] args) {
+        Node a = new Node(1);
+        Node b = new Node(2);
+        Node c = new Node(2);
+        Node d = new Node(1);
+        Node e = new Node(5);
+        Node f = new Node(6);
+        Node aa = new Node(1);
+        Node ab = new Node(2);
+        Node ac = new Node(30);
+        Node ad = new Node(48);
+        Node ae = new Node(50);
+        Node af = new Node(60);
+        Node ag = new Node(70);
+
+
+// link kro hr node ko
+// even
+        a.next = b;
+        b.next = c;
+        c.next = d;
+        d.next = e;
+        e.next = f;
+
+// odd
+        aa.next = ab;
+        ab.next = ac;
+        ac.next = ad;
+        ad.next = ae;
+        ae.next = af;
+        af.next = ag;
+    }
+}
