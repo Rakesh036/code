@@ -1,0 +1,101 @@
+/* Stack_01 "inBuilt Stack" class ka use krenge
+   Stack_02 me array ka use kr Stack class bnayenge
+   Stack_03 me linked list ka use kr Stack class bnayenge
+   Stack_04 me interview question krenge
+-------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
+function 1: push(intger)
+function 2: pop()
+function 3: peek()
+function 4: size()
+function 5: capacity()
+function 6: isEmpty()
+function 7: isFull()
+function 8: display()
+___________________________________________________________________________________________________________
+                                    File:  Stack_02
+___________________________________________________________________________________________________________
+*/
+
+package Stack;
+
+public class Stack_02 {
+    public static class StackArr {
+        private int[] arr = new int[5];
+        private int size = 0;
+
+
+        // function: 1
+        void push(int x) {
+            if (size == arr.length) {
+                System.out.println("Stack overflow");
+                return;
+            }
+            arr[size] = x;
+            size++;
+        }
+
+        // function: 2
+        int pop() {
+            if (size == 0) {
+                System.out.println("Error, Stack is empty");
+                return -1;
+            }
+            int temp = arr[size - 1];
+            arr[size - 1] = 0;
+            size--;
+            return temp;
+        }
+
+        // function: 3
+        int peek() {
+            if (size == 0) {
+                System.out.println("Error, Stack is empty");
+                return -1;
+            }
+            return arr[size - 1];
+        }
+
+        // function: 4
+        int size() {
+            return size;
+        }
+
+        // function: 5
+        int capacity() {
+            return arr.length;
+        }
+
+        // function: 6
+        boolean isEmpty() {
+            return  (size == 0);
+        }
+
+        // function: 7
+        boolean isFull() {
+            return (size == arr.length);
+        }
+
+        // function: 8
+        void display() {
+            for (int i = 0; i < size; i++) {
+                System.out.print(arr[i] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+/*
+___________________________________________________________________________________________________________
+                                           Main function
+___________________________________________________________________________________________________________
+*/
+
+
+    public static void main(String[] args) {
+        StackArr st = new StackArr();
+//        st.push(2);
+        st.size = 8;
+        System.out.println(st.size);
+    }
+}
